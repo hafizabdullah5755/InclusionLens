@@ -1,16 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Home = () => (
-  <section style={{ textAlign: "center", marginTop: "40px" }}>
-    <h1>
-      Welcome to <span style={{ color: "#00adb5" }}>InclusionLens</span> 🌈
-    </h1>
-    <p>
-      AI-powered tools to help you build inclusive, accessible digital
-      experiences for everyone.
-    </p>
-    <button>Learn More</button>
-  </section>
-);
+export default function Home() {
+  const navigate = useNavigate();
 
-export default Home;
+  return (
+    <section className="home">
+      <h1>
+        Welcome to <span className="brand">InclusionLens 🌈</span>
+      </h1>
+      <p>
+        AI-powered tools to help you build inclusive, accessible digital
+        experiences for everyone.
+      </p>
+      <button onClick={() => navigate("/resources")}>Learn More</button>
+    </section>
+  );
+}

@@ -1,17 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
-const Navbar = () => (
-  <nav className="navbar">
-    <h2 className="logo">InclusionLens</h2>
-    <div className="links">
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Link to="/resources">Resources</Link>
-      <Link to="/contact">Contact</Link>
-    </div>
-  </nav>
-);
-
-export default Navbar;
+export default function Navbar() {
+  return (
+    <nav className="navbar">
+      <div className="nav-brand">InclusionLens</div>
+      <div className="links">
+        <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
+          Home
+        </NavLink>
+        <NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>
+          About
+        </NavLink>
+        <NavLink to="/resources" className={({ isActive }) => (isActive ? "active" : "")}>
+          Resources
+        </NavLink>
+        <NavLink to="/contact" className={({ isActive }) => (isActive ? "active" : "")}>
+          Contact
+        </NavLink>
+      </div>
+    </nav>
+  );
+}
