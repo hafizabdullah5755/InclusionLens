@@ -1,17 +1,12 @@
 import React from "react";
+import "./Footer.css";
 
-export default function Footer() {
+function Footer() {
   return (
-    <footer
-      style={{
-        backgroundColor: "#222831",
-        color: "#eee",
-        textAlign: "center",
-        padding: "1rem 0",
-        marginTop: "40px",
-      }}
-    >
-      <p>© 2025 InclusionLens. All rights reserved.</p>
+    <footer className="footer">
+      <p>© 2025 InclusionLens | Built with ❤️ for Inclusive Education</p>
     </footer>
   );
 }
+
+export default Footer;

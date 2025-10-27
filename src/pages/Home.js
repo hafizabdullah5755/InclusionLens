@@ -1,19 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function Home() {
-  const navigate = useNavigate();
-
+function Home() {
   return (
-    <section className="home">
-      <h1>
-        Welcome to <span className="brand">InclusionLens 🌈</span>
-      </h1>
+    <section>
+      <h2>Welcome to InclusionLens</h2>
       <p>
-        AI-powered tools to help you build inclusive, accessible digital
-        experiences for everyone.
+        Our mission is to make digital education accessible for everyone.
+        This platform helps educators and developers build inclusive experiences.
       </p>
-      <button onClick={() => navigate("/resources")}>Learn More</button>
     </section>
   );
 }
+
+export default Home;

@@ -1,50 +1,46 @@
 import React from "react";
+import "./Resources.css";
 
-const resources = [
-  {
-    title: "WCAG Guidelines",
-    desc: "The global standard for making web content accessible to everyone.",
-    link: "https://www.w3.org/WAI/standards-guidelines/wcag/",
-  },
-  {
-    title: "ARIA Authoring Practices",
-    desc: "How to use ARIA roles, states, and properties correctly.",
-    link: "https://www.w3.org/TR/wai-aria-practices/",
-  },
-  {
-    title: "Axe DevTools",
-    desc: "A browser extension to find and fix accessibility issues fast.",
-    link: "https://www.deque.com/axe/devtools/",
-  },
-  {
-    title: "Inclusive Design Principles",
-    desc: "Practical principles to design for everyone from the start.",
-    link: "https://inclusivedesignprinciples.org/",
-  },
-];
+function Resources() {
+  const resources = [
+    {
+      title: "WCAG 2.2 Guidelines",
+      description: "Official W3C accessibility standards that help make web content usable for everyone.",
+      link: "https://www.w3.org/WAI/standards-guidelines/wcag/",
+    },
+    {
+      title: "WebAIM (Web Accessibility In Mind)",
+      description: "Trusted resource offering articles, training, and tools to improve web accessibility.",
+      link: "https://webaim.org/",
+    },
+    {
+      title: "Microsoft Inclusive Design Toolkit",
+      description: "A practical guide to design products and experiences that are inclusive of all users.",
+      link: "https://inclusive.microsoft.design/",
+    },
+    {
+      title: "WAVE Accessibility Evaluation Tool",
+      description: "Free tool that helps you evaluate the accessibility of your web pages.",
+      link: "https://wave.webaim.org/",
+    },
+  ];
 
-export default function Resources() {
   return (
-    <section style={{ padding: "50px 20px" }}>
-      <h1>Accessibility Resources</h1>
-      <p>Essential tools and guides for building inclusive products.</p>
-
-      <div className="resources-grid" role="list">
-        {resources.map((r, idx) => (
-          <article className="resource-card" role="listitem" key={idx}>
-            <h3>{r.title}</h3>
-            <p>{r.desc}</p>
-            <a
-              href={r.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Open resource: ${r.title}`}
-            >
+    <section className="resources-section">
+      <h2>Resources for Inclusive Design</h2>
+      <div className="resources-grid">
+        {resources.map((res, i) => (
+          <div key={i} className="resource-card">
+            <h3>{res.title}</h3>
+            <p>{res.description}</p>
+            <a href={res.link} target="_blank" rel="noopener noreferrer">
               Visit Resource →
             </a>
-          </article>
+          </div>
         ))}
       </div>
     </section>
   );
 }
+
+export default Resources;

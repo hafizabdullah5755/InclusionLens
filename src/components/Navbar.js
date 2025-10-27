@@ -1,25 +1,39 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
+import { ThemeContext } from "../ThemeContext";
 
-export default function Navbar() {
+function Navbar() {
+  const { darkMode, setDarkMode, fontSize, setFontSize } = useContext(ThemeContext);
+
   return (
-    <nav className="navbar">
-      <div className="nav-brand">InclusionLens</div>
-      <div className="links">
-        <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
-          Home
-        </NavLink>
-        <NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>
-          About
-        </NavLink>
-        <NavLink to="/resources" className={({ isActive }) => (isActive ? "active" : "")}>
-          Resources
-        </NavLink>
-        <NavLink to="/contact" className={({ isActive }) => (isActive ? "active" : "")}>
-          Contact
-        </NavLink>
+    <nav className={`navbar ${darkMode ? "dark" : ""}`}>
+      <h1 className="logo">InclusionLens</h1>
+      <ul className="nav-links">
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/resources">Resources</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
+      </ul>
+
+      <div className="controls">
+        <label>
+          <input
+            type="checkbox"
+            checked={darkMode}
+            onChange={() => setDarkMode(!darkMode)}
+          />{" "}
+          Dark Mode
+        </label>
+
+        <select value={fontSize} onChange={(e) => setFontSize(e.target.value)}>
+          <option value="small">A-</option>
+          <option value="medium">A</option>
+          <option value="large">A+</option>
+        </select>
       </div>
     </nav>
   );
 }
+
+export default Navbar;

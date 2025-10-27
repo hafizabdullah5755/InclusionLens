@@ -1,19 +1,15 @@
 import React from "react";
 
-export default function About() {
+function About() {
   return (
-    <section className="about">
-      <h1>About InclusionLens</h1>
+    <section>
+      <h2>About InclusionLens</h2>
       <p>
-        InclusionLens is dedicated to helping developers, designers, and
-        educators create inclusive digital experiences through simple,
-        AI-assisted insights and accessibility tools.
-      </p>
-      <p>
-        Our goal is to make the web accessible to everyone by identifying
-        barriers and providing solutions that promote diversity, equity, and
-        inclusion.
+        InclusionLens is designed to raise awareness and share resources for inclusive technology.
+        We aim to empower teachers and developers to embrace accessibility standards like WCAG 2.1.
       </p>
     </section>
   );
 }
+
+export default About;

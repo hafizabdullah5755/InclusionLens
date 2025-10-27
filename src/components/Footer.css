@@ -1,0 +1,19 @@
+.footer {
+  background-color: #00b2b2;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+body.dark .footer {
+  background-color: #222;
+  color: #f1f1f1;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+  }
+}
