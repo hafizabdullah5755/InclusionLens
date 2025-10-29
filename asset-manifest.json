@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/InclusionLens/static/css/main.78e3a71f.css",
+    "main.js": "/InclusionLens/static/js/main.ac394fbc.js",
+    "index.html": "/InclusionLens/index.html",
+    "main.78e3a71f.css.map": "/InclusionLens/static/css/main.78e3a71f.css.map",
+    "main.ac394fbc.js.map": "/InclusionLens/static/js/main.ac394fbc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.78e3a71f.css",
+    "static/js/main.ac394fbc.js"
+  ]
+}
