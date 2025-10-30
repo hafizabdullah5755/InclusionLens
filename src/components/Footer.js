@@ -4,7 +4,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      <p>© 2025 InclusionLens | Built with ❤️ for Inclusive Education</p>
+      <p>© 2025 InclusionLens. Built with accessibility in mind.</p>
     </footer>
   );
 }

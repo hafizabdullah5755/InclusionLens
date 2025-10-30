@@ -1,36 +1,36 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import { ThemeContext } from "../ThemeContext";
 
 function Navbar() {
-  const { darkMode, setDarkMode, fontSize, setFontSize } = useContext(ThemeContext);
+  const [darkMode, setDarkMode] = useState(false);
+  const [fontSize, setFontSize] = useState(16);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle("dark");
+  };
+
+  const increaseFont = () => setFontSize((s) => Math.min(s + 2, 24));
+  const decreaseFont = () => setFontSize((s) => Math.max(s - 2, 12));
+  const resetFont = () => setFontSize(16);
+
+  document.documentElement.style.fontSize = `${fontSize}px`;
 
   return (
-    <nav className={`navbar ${darkMode ? "dark" : ""}`}>
-      <h1 className="logo">InclusionLens</h1>
+    <nav className="navbar">
+      <div className="nav-logo">InclusionLens</div>
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/resources">Resources</Link></li>
         <li><Link to="/contact">Contact</Link></li>
       </ul>
-
       <div className="controls">
-        <label>
-          <input
-            type="checkbox"
-            checked={darkMode}
-            onChange={() => setDarkMode(!darkMode)}
-          />{" "}
-          Dark Mode
-        </label>
-
-        <select value={fontSize} onChange={(e) => setFontSize(e.target.value)}>
-          <option value="small">A-</option>
-          <option value="medium">A</option>
-          <option value="large">A+</option>
-        </select>
+        <button onClick={toggleDarkMode}>{darkMode ? "☀️" : "🌙"}</button>
+        <button onClick={increaseFont}>A+</button>
+        <button onClick={decreaseFont}>A-</button>
+        <button onClick={resetFont}>A</button>
       </div>
     </nav>
   );

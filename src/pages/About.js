@@ -3,10 +3,11 @@ import React from "react";
 function About() {
   return (
     <section>
-      <h2>About InclusionLens</h2>
+      <h1>About InclusionLens</h1>
       <p>
-        InclusionLens is designed to raise awareness and share resources for inclusive technology.
-        We aim to empower teachers and developers to embrace accessibility standards like WCAG 2.1.
+        InclusionLens helps developers and educators understand accessibility
+        principles. From WCAG guidelines to inclusive content practices, we
+        empower everyone to create user-friendly digital experiences.
       </p>
     </section>
   );

@@ -1,52 +1,50 @@
 import React, { useState } from "react";
-import "./Contact.css";
 
 function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", message: "" });
+    setSubmitted(true);
   };
 
-  return (
-    <section className="contact-section">
-      <h2>Contact Us</h2>
+  if (submitted) {
+    return (
+      <section>
+        <h1>Thank you!</h1>
+        <p>We’ll get back to you soon.</p>
+      </section>
+    );
+  }
 
-      {!sent ? (
-        <form onSubmit={handleSubmit} className="contact-form">
-          <input
-            name="name"
-            placeholder="Name"
-            onChange={handleChange}
-            value={form.name}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            value={form.email}
-            required
-          />
-          <textarea
-            name="message"
-            placeholder="Message"
-            rows="5"
-            onChange={handleChange}
-            value={form.message}
-            required
-          />
-          <button type="submit">Send Message</button>
-        </form>
-      ) : (
-        <p className="thank-you">✅ Thank you! We’ll get back to you soon.</p>
-      )}
+  return (
+    <section>
+      <h1>Contact Us</h1>
+      <form onSubmit={handleSubmit}>
+        <label>Name</label>
+        <input name="name" value={form.name} onChange={handleChange} required />
+        <label>Email</label>
+        <input
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+          required
+        />
+        <label>Message</label>
+        <textarea
+          name="message"
+          rows="4"
+          value={form.message}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
     </section>
   );
 }

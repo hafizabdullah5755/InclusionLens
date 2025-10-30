@@ -3,10 +3,11 @@ import React from "react";
 function Home() {
   return (
     <section>
-      <h2>Welcome to InclusionLens</h2>
+      <h1>Welcome to InclusionLens</h1>
       <p>
-        Our mission is to make digital education accessible for everyone.
-        This platform helps educators and developers build inclusive experiences.
+        A platform built to promote digital accessibility and inclusive design.
+        Explore resources, learn accessibility standards, and make your
+        projects usable by everyone.
       </p>
     </section>
   );
