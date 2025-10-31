@@ -1,28 +1,38 @@
+// src/pages/Resources.js
 import React from "react";
 
-function Resources() {
+export default function Resources() {
+  const items = [
+    {
+      title: "WCAG Guidelines (W3C)",
+      url: "https://www.w3.org/WAI/standards-guidelines/wcag/",
+      desc: "Authoritative accessibility success criteria and techniques."
+    },
+    {
+      title: "Accessibility Developer Guide",
+      url: "https://www.accessibility-developer-guide.com/",
+      desc: "Practical, developer-focused accessibility techniques."
+    },
+    {
+      title: "WAVE – Web Accessibility Evaluation Tool",
+      url: "https://wave.webaim.org/",
+      desc: "Quick visual evaluation of page accessibility issues."
+    }
+  ];
+
   return (
-    <section>
-      <h1>Accessibility Resources</h1>
-      <ul>
-        <li>
-          <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer">
-            WCAG Guidelines (W3C)
-          </a>
-        </li>
-        <li>
-          <a href="https://www.accessibility-developer-guide.com/" target="_blank" rel="noopener noreferrer">
-            Accessibility Developer Guide
-          </a>
-        </li>
-        <li>
-          <a href="https://wave.webaim.org/" target="_blank" rel="noopener noreferrer">
-            WAVE – Web Accessibility Evaluation Tool
-          </a>
-        </li>
+    <section aria-labelledby="resources-heading" className="page-section">
+      <h1 id="resources-heading">Accessibility Resources</h1>
+      <ul role="list" className="resource-list">
+        {items.map((it) => (
+          <li key={it.url} className="resource-item">
+            <a href={it.url} target="_blank" rel="noopener noreferrer">
+              {it.title}
+            </a>
+            <p className="resource-desc">{it.desc}</p>
+          </li>
+        ))}
       </ul>
     </section>
   );
 }
-
-export default Resources;
