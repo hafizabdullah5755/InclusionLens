@@ -1,79 +1,64 @@
-# Getting Started with Create React App
+# 🌍 InclusionLens – Inclusive, Accessible Web Tools
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+InclusionLens helps developers and designers create accessible, inclusive digital experiences.  
+This project demonstrates real-world accessibility, usability, and performance best practices aligned with WCAG 2.2 AA.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Live Demo
 
-### `npm start`
+🔗 **Live Site:** [https://hafizabdullah5755.github.io/InclusionLens/](https://hafizabdullah5755.github.io/InclusionLens/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧱 Built With
 
-### `npm test`
+- **React 19** + **React Router v7**
+- **Framer Motion** for smooth (optional) animations  
+- **Accessible Form Validation** with ARIA roles  
+- **Dark/Light Mode + Font Resizing**
+- **GitHub Pages** deployment  
+- **Lighthouse** performance & SEO testing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🧠 Accessibility Highlights
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ✅ WCAG 2.2 AA Compliant  
+- ✅ Keyboard navigation & Skip link  
+- ✅ Proper landmarks (role="main", "navigation", "contentinfo")  
+- ✅ Screen-reader feedback for form status (`role="alert"` and `role="status"`)  
+- ✅ ARIA labels & aria-current on active navigation  
+- ✅ Respects “prefers-reduced-motion”
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📈 Performance & SEO
 
-### `npm run eject`
+| Category | Score |
+|-----------|--------|
+| Performance | 95 + |
+| Accessibility | **100** |
+| Best Practices | **100** |
+| SEO | 98 + |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+All verified using Lighthouse (Day 11 Final Report).
 
 ---
 
 ## 📂 Project Assets (Screenshots & Reports)
 
-All project screenshots, performance reports, and documentation are stored on Google Drive.
+All development screenshots, Lighthouse reports, and documentation are stored on Google Drive.  
+View publicly here:  
+🔗 **Google Drive (View Only)** → [https://drive.google.com/drive/folders/1IU5Mqu8SJOp1oyWnUj2egJJ_4Gb-PZPp](https://drive.google.com/drive/folders/1IU5Mqu8SJOp1oyWnUj2egJJ_4Gb-PZPp)
 
-🔗 **Google Drive (View-only)**:  
-https://drive.google.com/drive/folders/1IU5Mqu8SJOp1oyWnUj2egJJ_4Gb-PZPp
+---
+
+## ⚙️ Available Scripts
+
+In the project directory:
+
+```bash
+npm start      # Run locally
+npm run build  # Build for production
+npm run deploy # Publish to GitHub Pages
