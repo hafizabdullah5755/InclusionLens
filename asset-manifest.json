@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/InclusionLens/static/css/main.39fa3bd0.css",
-    "main.js": "/InclusionLens/static/js/main.d912c3ae.js",
+    "main.css": "/InclusionLens/static/css/main.b7f5512a.css",
+    "main.js": "/InclusionLens/static/js/main.90d9b356.js",
     "index.html": "/InclusionLens/index.html",
-    "main.39fa3bd0.css.map": "/InclusionLens/static/css/main.39fa3bd0.css.map",
-    "main.d912c3ae.js.map": "/InclusionLens/static/js/main.d912c3ae.js.map"
+    "main.b7f5512a.css.map": "/InclusionLens/static/css/main.b7f5512a.css.map",
+    "main.90d9b356.js.map": "/InclusionLens/static/js/main.90d9b356.js.map"
   },
   "entrypoints": [
-    "static/css/main.39fa3bd0.css",
-    "static/js/main.d912c3ae.js"
+    "static/css/main.b7f5512a.css",
+    "static/js/main.90d9b356.js"
   ]
 }
