@@ -14,7 +14,8 @@ export default function Contact() {
     const e = {};
     if (!values.name.trim()) e.name = "Name is required.";
     if (!values.email.trim()) e.email = "Email is required.";
-    else if (!/^\S+@\S+\.\S+$/.test(values.email)) e.email = "Enter a valid email.";
+    else if (!/^\S+@\S+\.\S+$/.test(values.email))
+      e.email = "Enter a valid email.";
     if (!values.message.trim()) e.message = "Message is required.";
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -28,10 +29,12 @@ export default function Contact() {
       statusRef.current?.focus();
       return;
     }
-    // Simulated submit
+
+    // Simulated async submit
     setTimeout(() => {
-      setStatus("Message sent. Thanks for reaching out!");
+      setStatus("✅ Message sent. Thanks for reaching out!");
       setValues({ name: "", email: "", message: "" });
+      // Focus on status for screen readers
       statusRef.current?.focus();
     }, 300);
   };
@@ -50,6 +53,13 @@ export default function Contact() {
       >
         {status}
       </p>
+
+      {/* Visual feedback below form */}
+      {status && (
+        <div className="form-status" aria-live="polite">
+          {status}
+        </div>
+      )}
 
       <form noValidate onSubmit={onSubmit} aria-describedby="contact-help">
         <p id="contact-help" className="visually-hidden">

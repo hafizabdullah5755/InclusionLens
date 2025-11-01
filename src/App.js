@@ -13,15 +13,16 @@ import "./App.css";
 function App() {
   return (
     <Router>
-      {/* Accessible skip link for keyboard users */}
+      {/* Skip to main content (keyboard accessibility) */}
       <SkipLink />
 
+      {/* Site Header */}
       <header role="banner">
         <Navbar />
       </header>
 
-      {/* Main content area with accessible landmark */}
-      <main id="main-content" role="main" tabIndex="-1">
+      {/* Main Content Area */}
+      <main id="main-content" role="main" tabIndex="-1" className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -31,6 +32,7 @@ function App() {
         </Routes>
       </main>
 
+      {/* Footer Section */}
       <footer role="contentinfo">
         <Footer />
       </footer>
