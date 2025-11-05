@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "homepage": "https://hafizabdullah5755.github.io/InclusionLens",
+  "description": "InclusionLens – A web accessibility learning and testing tool promoting inclusive, accessible digital design.",
+  "author": "Hafiz Abdullah",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -15,6 +18,9 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -22,9 +28,6 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-  },
-  "devDependencies": {
-    "gh-pages": "^6.3.0"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +46,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "keywords": [
+    "accessibility",
+    "react",
+    "inclusion",
+    "web-accessibility",
+    "inclusive-design",
+    "WCAG",
+    "a11y",
+    "frontend"
+  ]
 }
