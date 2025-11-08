@@ -60,3 +60,20 @@ Performance was evaluated using Lighthouse in Chrome DevTools.
 
 ## 📂 Project Structure
 
+InclusionLens/
+│
+├── public/ # Static assets
+├── src/
+│ ├── components/ # Navbar, Footer, Controls, Skip Link
+│ ├── pages/ # Home, About, Resources, Contact
+│ └── App.js
+│
+└── README.md
+
+---
+
+## 🛠️ Running the Project
+
+```bash
+npm install
+npm start
