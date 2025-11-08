@@ -1,110 +1,62 @@
-# 🌍 InclusionLens – Inclusive, Accessible Teaching Support Toolkit
+# 🌍 InclusionLens — Accessible & Inclusive Web Interface Tools
 
-InclusionLens is a teacher-centered digital support tool designed to help educators quickly adapt lessons for diverse learners, including SEND (Special Educational Needs and Disabilities) contexts.  
-The platform bridges the gap between *inclusive pedagogy theory* and *real-time classroom action*, providing simple, practical accessibility adjustments teachers can make on the spot.
+InclusionLens is a lightweight accessibility and inclusion support interface built to help improve the usability of web experiences for diverse users. The project focuses on practical accessibility features that support readability, visual comfort, keyboard navigation, and clarity of interaction.
 
-This project demonstrates real-world accessibility, usability, performance optimization, and inclusive design aligned with **WCAG 2.2 AA** and **UDL (Universal Design for Learning)** principles.
+The goal is to demonstrate how accessibility principles (WCAG 2.2 AA) and inclusive design decisions can be integrated into everyday interfaces in a clear, simple, and maintainable way.
 
 ---
 
 ## 🚀 Live Demo
 
-🔗 **Live Site:**  
-https://hafizabdullah5755.github.io/InclusionLens/
+🔗 https://hafizabdullah5755.github.io/InclusionLens/
 
 ---
 
-## 🧩 Key Features
+## 🧱 Features
 
-| Feature | Description |
-|--------|-------------|
-| **Dark/Light Mode** | Improves visual comfort and accessibility |
-| **Font Resize Controls (A+, A-, Reset)** | Supports visual accessibility and reading ease |
-| **Skip to Main Content Link** | Full keyboard navigation support |
-| **Screen Reader Announcements** | `role="alert"` and `aria-live` for feedback |
-| **Consistent Accessible Navigation** | Uses `aria-current="page"` for active routes |
-| **WCAG 2.2 AA Compliant Structure** | Landmarks: `header`, `main`, `nav`, `footer` |
-| **Performance Optimized** | Lazy loaded components + compressed WebP social preview image |
-
----
-
-## 🧠 Why This Matters
-
-Teachers — especially supply teachers, SEND practitioners, and early-career educators — often need to adapt lessons *immediately* during class.  
-InclusionLens supports those real-time decisions by:
-
-- Reducing cognitive load  
-- Improving accessibility awareness  
-- Supporting inclusive participation  
-- Making inclusive teaching *practical*, not theoretical  
-
-This aligns with PhD and research goals around **teacher cognition**, **inclusive pedagogy**, and **digital scaffolding in ALN/SEND settings**.
+| Feature | Purpose |
+|--------|---------|
+| **Dark / Light Mode Toggle** | Supports visual comfort and sensory preferences |
+| **Font Size Controls (A+, A-, A)** | Helps users who benefit from adjustable text readability |
+| **Skip to Main Content Link** | Improves keyboard navigation and screen reader efficiency |
+| **Clear Page Landmarks** | Uses semantic HTML (`header`, `main`, `footer`, `nav`) for accessibility |
+| **ARIA Roles & Live Regions** | Improves clarity for assistive technology users |
+| **Responsive Layout** | Works across desktop, tablet, and mobile devices |
 
 ---
 
-## 🎨 Accessibility Highlights
+## 🎨 Accessibility Standards
 
-- ✅ WCAG 2.2 AA color contrast and layout
-- ✅ Skip navigation for keyboard users
-- ✅ Focus-visible states preserved across the UI
-- ✅ ARIA labeling and form validation roles
-- ✅ Respects user `prefers-reduced-motion`
-- ✅ Accessible page structure and semantic HTML
+This project follows:
 
----
-
-## 📈 Performance & SEO (Day 12)
-
-| Category | Score (Mobile/PC) |
-|--------|------|
-| Performance | **90+** |
-| Accessibility | **100** |
-| Best Practices | **100** |
-| SEO | **100** |
-
-> Full Lighthouse reports stored in Drive (see below).
+- WCAG 2.2 AA color contrast ratios
+- Keyboard operability (no keyboard traps)
+- Visible focus indicators
+- `aria-current` on active navigation
+- Screen-reader accessible status messages
 
 ---
 
-## 📸 Screenshots
+## 📈 Performance & Optimization
 
-| Home Page | Accessibility Toolbar | Performance Report |
-|----------|----------------------|-------------------|
-| ![Home Screenshot](docs/screenshots/home.png) | ![Toolbar Screenshot](docs/screenshots/toolbar.png) | ![Lighthouse Screenshot](docs/screenshots/lighthouse.png) |
+During optimization:
 
-> If you haven’t added screenshots yet, keep these placeholders — no need to edit code.
+- Images were converted/compressed where appropriate (including WebP support)
+- Unused CSS was removed
+- React rendering paths were reviewed to support smoother interaction
 
----
+Performance was evaluated using Lighthouse in Chrome DevTools.
 
-## 📂 Documentation & Drive Storage (Portfolio Evidence)
+| Category       | Approx Score |
+|----------------|--------------|
+| Performance    | 90+          |
+| Accessibility  | 100          |
+| Best Practices | 100          |
+| SEO            | 100          |
 
-All evidence — development progress, reports, design notes, and optimization work — is stored here:
-
-🔗 **Google Drive (View Only):**  
-https://drive.google.com/drive/folders/1IU5Mqu8SJOp1oyWnUj2egJJ_4Gb-PZPp
-
-Contains:
-- Day-by-day build documentation
-- Lighthouse performance reports
-- Social preview validation screenshots
-- Collateral used for research + supervisor review
+(Scores may vary depending on device and network conditions.)
 
 ---
 
-## 🛠️ Built With
+## 📂 Project Structure
 
-- **React 18/19** + **React Router v7**
-- **Framer Motion** (optional reduced-motion support)
-- **Semantic HTML + ARIA roles**
-- **GitHub Pages Deployment**
-- **Lighthouse/DevTools Performance Monitoring**
-
----
-
-## ⚙️ Developer Usage
-
-```bash
-npm install      # Install dependencies
-npm start        # Run locally
-npm run build    # Production build
-npm run deploy   # Deploy to GitHub Pages
