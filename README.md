@@ -61,13 +61,30 @@ Performance was evaluated using Lighthouse in Chrome DevTools.
 ## 📂 Project Structure
 
 InclusionLens/
+├── public/ # Static assets (favicon, manifest, social image, etc.)
+│ ├── index.html
+│ ├── favicon.ico
+│ ├── social-cover.webp
+│ └── _redirects
 │
-├── public/ # Static assets
 ├── src/
-│ ├── components/ # Navbar, Footer, Controls, Skip Link
-│ ├── pages/ # Home, About, Resources, Contact
-│ └── App.js
+│ ├── components/ # Reusable UI components
+│ │ ├── Navbar.jsx
+│ │ ├── Footer.jsx
+│ │ ├── SkipLink.jsx
+│ │ └── AccessibilityControls.jsx
+│ │
+│ ├── pages/ # Main route pages
+│ │ ├── Home.jsx
+│ │ ├── About.jsx
+│ │ ├── Resources.jsx
+│ │ └── Contact.jsx
+│ │
+│ ├── App.js # Main application router
+│ └── App.css # Global styles
 │
+├── package.json
+├── package-lock.json
 └── README.md
 
 ---
