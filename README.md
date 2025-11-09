@@ -95,19 +95,20 @@ InclusionLens/
 npm install
 npm start
 
-## 🧭 System Flow (How Teachers Use InclusionLens)
+## 🧭 System Flow (How InclusionLens Supports Teachers)
 
 ```mermaid
 flowchart LR
 A[Teacher opens InclusionLens] --> B{Who is in my class today?}
-B --> C[Teacher Profile: Role / Year Group / SEND Needs]
+B --> C[Teacher Profile: Role / Year / SEND Needs]
 A --> D[Home: Quick Inclusive Actions]
 D --> E[Strategy Finder]
-E --> F[Lesson Adaptor: Step-by-step support]
-D --> G[Resources Library (WCAG, Wave, ADG)]
-F --> H[Filter by Need / Task Type]
-H --> I[Action Cards + Printable Tips]
+E --> F[Lesson Adaptor (Step-by-step support)]
+D --> G[Resource Library (WCAG / WAVE / ADG Guides)]
+F --> H[Filter strategies by Need / Task]
+H --> I[Action Cards + Printable Recommendations]
 I --> J[Select Barrier to Learning]
-J --> K[Suggested Adaptations (UDL-based)]
-K --> L[Evidence Export (CSV / PDF)]
+J --> K[Suggested Adaptations (UDL-aligned)]
+K --> L[Evidence Export → CSV / PDF]
 C --> M[Settings: Theme / Font Size / Reduced Motion]
+```
