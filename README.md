@@ -95,40 +95,19 @@ InclusionLens/
 npm install
 npm start
 
-flowchart LR
-    A[Teacher opens InclusionLens] --> B{Who am I teaching?}
-    B -->|Profile| C[Teacher Profile (role/year/SEN focus)]
-    A --> D[Home: Quick Actions]
-    D --> E[Strategy Finder]
-    D --> F[Lesson Adaptor]
-    D --> G[Resources (WCAG, WAVE, ADG)]
-    E --> H[Filter by Need & Task]
-    H --> I[Action Cards + Print/Export]
-    F --> J[Select Barrier]
-    J --> K[Adaptation Suggestions (UDL)]
-    I --> L[Evidence Export (CSV/PDF)]
-    K --> L
-    C --> M[Settings: Theme, Font, Reduced Motion]
-    D --> M
-    subgraph Foundations
-    M
-    end
-gantt
-    title InclusionLens – Milestones
-    dateFormat  YYYY-MM-DD
-    section Done
-    Foundation & Repo            :done,   m1, 2025-10-01, 3d
-    UI & Navigation              :done,   m2, 2025-10-04, 2d
-    Content & Resources          :done,   m3, 2025-10-06, 2d
-    A11y by Design               :done,   m4, 2025-10-08, 3d
-    Deploy & SEO                 :done,   m5, 2025-10-11, 1d
-    Performance & Evidence       :done,   m6, 2025-10-12, 1d
+## 🧭 System Flow (How Teachers Use InclusionLens)
 
-    section Next
-    Teacher Profiles             :active, m7,  2025-11-10, 2d
-    Strategy Finder              :        m8,  2025-11-12, 2d
-    Lesson Adaptor               :        m9,  2025-11-14, 2d
-    Evidence Export (CSV/PDF)    :        m10, 2025-11-16, 1d
-    PWA / Offline                :        m11, 2025-11-17, 1d
-    Privacy-safe Analytics       :        m12, 2025-11-18, 1d
-    Pilot & Feedback             :        m13, 2025-11-19, 10d
+```mermaid
+flowchart LR
+A[Teacher opens InclusionLens] --> B{Who is in my class today?}
+B --> C[Teacher Profile: Role / Year Group / SEND Needs]
+A --> D[Home: Quick Inclusive Actions]
+D --> E[Strategy Finder]
+E --> F[Lesson Adaptor: Step-by-step support]
+D --> G[Resources Library (WCAG, Wave, ADG)]
+F --> H[Filter by Need / Task Type]
+H --> I[Action Cards + Printable Tips]
+I --> J[Select Barrier to Learning]
+J --> K[Suggested Adaptations (UDL-based)]
+K --> L[Evidence Export (CSV / PDF)]
+C --> M[Settings: Theme / Font Size / Reduced Motion]
