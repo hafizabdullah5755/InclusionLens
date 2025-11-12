@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkinclusionlens_clean=self.webpackChunkinclusionlens_clean||[]).push([[936],{936:(e,s,n)=>{n.r(s),n.d(s,{default:()=>l});n(43);var i=n(579);const l=function(){return(0,i.jsxs)("section",{children:[(0,i.jsx)("h1",{children:"Welcome to InclusionLens"}),(0,i.jsx)("p",{children:"A platform built to promote digital accessibility and inclusive design. Explore resources, learn accessibility standards, and make your projects usable by everyone."})]})}}}]);
-//# sourceMappingURL=936.1ebf29b4.chunk.js.map

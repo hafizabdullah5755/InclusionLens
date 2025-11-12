@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkinclusionlens_clean=self.webpackChunkinclusionlens_clean||[]).push([[818],{818:(e,n,s)=>{s.r(n),s.d(n,{default:()=>c});s(43);var i=s(579);const c=function(){return(0,i.jsxs)("section",{children:[(0,i.jsx)("h1",{children:"About InclusionLens"}),(0,i.jsx)("p",{children:"InclusionLens helps developers and educators understand accessibility principles. From WCAG guidelines to inclusive content practices, we empower everyone to create user-friendly digital experiences."})]})}}}]);
-//# sourceMappingURL=818.21c84540.chunk.js.map
