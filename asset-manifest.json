@@ -1,23 +1,33 @@
 {
   "files": {
-    "main.css": "/InclusionLens/static/css/main.2304d385.css",
-    "main.js": "/InclusionLens/static/js/main.559d3efa.js",
-    "static/js/439.38d22cb1.chunk.js": "/InclusionLens/static/js/439.38d22cb1.chunk.js",
+    "main.css": "/InclusionLens/static/css/main.2e4740ef.css",
+    "main.js": "/InclusionLens/static/js/main.5bac3f87.js",
+    "static/css/547.67e64409.chunk.css": "/InclusionLens/static/css/547.67e64409.chunk.css",
+    "static/js/547.7e6099ee.chunk.js": "/InclusionLens/static/js/547.7e6099ee.chunk.js",
     "static/js/818.2aff2549.chunk.js": "/InclusionLens/static/js/818.2aff2549.chunk.js",
     "static/js/346.c6c19507.chunk.js": "/InclusionLens/static/js/346.c6c19507.chunk.js",
     "static/js/615.63d037e5.chunk.js": "/InclusionLens/static/js/615.63d037e5.chunk.js",
     "static/js/900.939bc1a2.chunk.js": "/InclusionLens/static/js/900.939bc1a2.chunk.js",
+    "static/js/829.c6c9bd29.chunk.js": "/InclusionLens/static/js/829.c6c9bd29.chunk.js",
+    "static/js/225.43fa4178.chunk.js": "/InclusionLens/static/js/225.43fa4178.chunk.js",
+    "static/js/266.d21e984b.chunk.js": "/InclusionLens/static/js/266.d21e984b.chunk.js",
+    "static/js/625.3a72aa70.chunk.js": "/InclusionLens/static/js/625.3a72aa70.chunk.js",
     "index.html": "/InclusionLens/index.html",
-    "main.2304d385.css.map": "/InclusionLens/static/css/main.2304d385.css.map",
-    "main.559d3efa.js.map": "/InclusionLens/static/js/main.559d3efa.js.map",
-    "439.38d22cb1.chunk.js.map": "/InclusionLens/static/js/439.38d22cb1.chunk.js.map",
+    "main.2e4740ef.css.map": "/InclusionLens/static/css/main.2e4740ef.css.map",
+    "main.5bac3f87.js.map": "/InclusionLens/static/js/main.5bac3f87.js.map",
+    "547.67e64409.chunk.css.map": "/InclusionLens/static/css/547.67e64409.chunk.css.map",
+    "547.7e6099ee.chunk.js.map": "/InclusionLens/static/js/547.7e6099ee.chunk.js.map",
     "818.2aff2549.chunk.js.map": "/InclusionLens/static/js/818.2aff2549.chunk.js.map",
     "346.c6c19507.chunk.js.map": "/InclusionLens/static/js/346.c6c19507.chunk.js.map",
     "615.63d037e5.chunk.js.map": "/InclusionLens/static/js/615.63d037e5.chunk.js.map",
-    "900.939bc1a2.chunk.js.map": "/InclusionLens/static/js/900.939bc1a2.chunk.js.map"
+    "900.939bc1a2.chunk.js.map": "/InclusionLens/static/js/900.939bc1a2.chunk.js.map",
+    "829.c6c9bd29.chunk.js.map": "/InclusionLens/static/js/829.c6c9bd29.chunk.js.map",
+    "225.43fa4178.chunk.js.map": "/InclusionLens/static/js/225.43fa4178.chunk.js.map",
+    "266.d21e984b.chunk.js.map": "/InclusionLens/static/js/266.d21e984b.chunk.js.map",
+    "625.3a72aa70.chunk.js.map": "/InclusionLens/static/js/625.3a72aa70.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2304d385.css",
-    "static/js/main.559d3efa.js"
+    "static/css/main.2e4740ef.css",
+    "static/js/main.5bac3f87.js"
   ]
 }
