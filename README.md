@@ -1,98 +1,130 @@
-# 🌍 InclusionLens — Accessible & Inclusive Web Interface Tools
+🌍 InclusionLens — Inclusive & Accessible Classroom Support Tool
 
-InclusionLens is a lightweight accessibility and inclusion support interface built to help improve the usability of web experiences for diverse users. The project focuses on practical accessibility features that support readability, visual comfort, keyboard navigation, and clarity of interaction.
+InclusionLens is a modern, accessibility-focused web application designed to support teachers in building inclusive classroom environments.
+The platform offers classroom profiling, needs-based teaching strategies, accessibility-enhanced UI controls, and a scalable structure prepared for upcoming AI-driven personalization.
 
-The goal is to demonstrate how accessibility principles (WCAG 2.2 AA) and inclusive design decisions can be integrated into everyday interfaces in a clear, simple, and maintainable way.
+The goal is to bring together inclusive design, WCAG 2.2 AA accessibility standards, and practical educational tools into one intuitive interface.
 
----
-
-## 🚀 Live Demo
+🚀 Live Demo
 
 🔗 https://hafizabdullah5755.github.io/InclusionLens/
 
----
+✨ Key Features
+🧩 Classroom Profiling & Strategy Recommendations
 
-## 🧱 Features
+Create a classroom profile by selecting student needs (EAL, ADHD, Dyslexia, Autism, SEMH, etc.)
 
-| Feature | Purpose |
-|--------|---------|
-| **Dark / Light Mode Toggle** | Supports visual comfort and sensory preferences |
-| **Font Size Controls (A+, A-, A)** | Helps users who benefit from adjustable text readability |
-| **Skip to Main Content Link** | Improves keyboard navigation and screen reader efficiency |
-| **Clear Page Landmarks** | Uses semantic HTML (`header`, `main`, `footer`, `nav`) for accessibility |
-| **ARIA Roles & Live Regions** | Improves clarity for assistive technology users |
-| **Responsive Layout** | Works across desktop, tablet, and mobile devices |
+Automatically filtered teaching strategies based on selected needs
 
----
+Search and category filtering for better navigation
 
-## 🎨 Accessibility Standards
+Printable strategy pack for lesson planning
 
-This project follows:
+Clean, modular data design using structured JSON
 
-- WCAG 2.2 AA color contrast ratios
-- Keyboard operability (no keyboard traps)
-- Visible focus indicators
-- `aria-current` on active navigation
-- Screen-reader accessible status messages
+♿ Full Accessibility Support (WCAG 2.2 AA)
 
----
+Dark / Light mode toggle
 
-## 📈 Performance & Optimization
+Font size controls (A+, A-, Reset)
 
-During optimization:
+Skip to Main Content link for keyboard users
 
-- Images were converted/compressed where appropriate (including WebP support)
-- Unused CSS was removed
-- React rendering paths were reviewed to support smoother interaction
+Semantic landmarks for screen readers (header, main, nav, footer)
 
-Performance was evaluated using Lighthouse in Chrome DevTools.
+ARIA roles, labels, aria-live updates
 
-| Category       | Approx Score |
-|----------------|--------------|
-| Performance    | 90+          |
-| Accessibility  | 100          |
-| Best Practices | 100          |
-| SEO            | 100          |
+High-contrast, responsive layout for all devices
 
-(Scores may vary depending on device and network conditions.)
+Keyboard operable, visible focus outlines, accessible navigation
 
----
+🤖 Prepared for AI Integration (Next Phase)
 
-## 📂 Project Structure
+InclusionLens is structured to support a backend AI service for:
 
+Personalized strategies using LLMs
+
+12-grade (Year 1–12) classroom profiles
+
+Needs-aware adaptive recommendations
+
+Teacher-facing automated lesson adaptations
+
+A dedicated backend route will live in:
+
+/api/adapt.js
+
+📈 Performance & Optimization
+
+The project has been optimized for speed and accessibility:
+
+Category	Score
+Accessibility	100
+Best Practices	100
+SEO	100
+Performance	90+ (varies by system)
+
+Optimizations include:
+
+Lazy-loaded routes
+
+Compressed media assets
+
+Reduced unused CSS
+
+Clean React rendering patterns
+
+Improved layout shift stability
+
+📂 Project Structure
 InclusionLens/
-├── public/ # Static assets (favicon, manifest, social image, etc.)
-│ ├── index.html
-│ ├── favicon.ico
-│ ├── social-cover.webp
-│ └── _redirects
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   └── social-cover.webp
 │
 ├── src/
-│ ├── components/ # Reusable UI components
-│ │ ├── Navbar.jsx
-│ │ ├── Footer.jsx
-│ │ ├── SkipLink.jsx
-│ │ └── AccessibilityControls.jsx
-│ │
-│ ├── pages/ # Main route pages
-│ │ ├── Home.jsx
-│ │ ├── About.jsx
-│ │ ├── Resources.jsx
-│ │ └── Contact.jsx
-│ │
-│ ├── App.js # Main application router
-│ └── App.css # Global styles
+│   ├── api/                      # (for AI backend integration)
+│   │   └── adapt.js
+│   │
+│   ├── components/
+│   │   ├── Navbar.js
+│   │   ├── Footer.js
+│   │   ├── SkipLink.jsx
+│   │   ├── StrategyCard.jsx
+│   │   ├── StrategyFilters.jsx
+│   │   └── Accessibility Controls (built into Navbar)
+│   │
+│   ├── data/
+│   │   └── strategies.js
+│   │
+│   ├── hooks/
+│   │   └── useClassroomProfile.js
+│   │
+│   ├── pages/
+│   │   ├── Home.js
+│   │   ├── About.js
+│   │   ├── Resources.js
+│   │   ├── Contact.js
+│   │   ├── ClassroomProfile.jsx
+│   │   └── StrategyFinder.jsx
+│   │
+│   ├── App.js
+│   ├── App.css
+│   ├── index.js
+│   └── index.css
 │
 ├── package.json
-├── package-lock.json
 └── README.md
 
----
-
-## 🛠️ Running the Project
-
-```bash
+🛠️ Run Locally
 npm install
 npm start
 
 
+App will run on:
+➡️ http://localhost:3000
+
+📬 Contact / Collaboration
+
+If you're interested in accessibility, inclusive education, or ed-tech innovation, feel free to connect.
