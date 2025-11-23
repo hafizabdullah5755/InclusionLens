@@ -40,6 +40,20 @@ function Navbar() {
         <li>
           <NavLink to="/resources">Resources</NavLink>
         </li>
+
+        {/* ========================== */}
+        {/* NEW DAY-13/14 NAV LINKS    */}
+        {/* ========================== */}
+        <li>
+          <NavLink to="/profile">Classroom Profile</NavLink>
+        </li>
+        <li>
+          <NavLink to="/strategy-finder">Strategy Finder</NavLink>
+        </li>
+        <li>
+          <NavLink to="/lesson-adaptor">Lesson Adaptor</NavLink>
+        </li>
+
         <li>
           <NavLink to="/contact">Contact</NavLink>
         </li>

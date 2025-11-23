@@ -1,3 +1,8 @@
+/* =========================
+   InclusionLens – index.css (Day 14)
+   Global Reset + A11y + Print Support
+   ========================= */
+
 /* Global Reset */
 * {
   box-sizing: border-box;
@@ -5,12 +10,114 @@
   padding: 0;
 }
 
-/* Smooth transitions */
+/* Smooth transitions / scroll */
 html, body {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
-/* Default text color */
+/* Base typography */
 body {
-  color: #333;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #1f2937;              /* slate-800 */
+  background: #f8fafc;         /* slate-50 */
+}
+
+/* If your dark mode toggle adds a `.dark` class to body or html */
+body.dark,
+html.dark body {
+  color: #f1f5f9;              /* slate-100 */
+  background: #0f172a;         /* slate-950-ish */
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Accessible focus rings (critical for keyboard users) */
+:focus-visible {
+  outline: 3px solid #2563eb;   /* blue-600 */
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Respect reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optional helper classes used in Day 13/14 pages */
+.page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e2e8f0;   /* slate-200 */
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+body.dark .card,
+html.dark body .card {
+  background: #111827;         /* gray-900 */
+  border-color: #334155;        /* slate-700 */
+}
+
+/* =========================
+   PRINT SUPPORT (Day 13/14)
+   - Prints action cards cleanly
+   - Hides Nav/Footer/UI clutter
+   ========================= */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Hide global chrome */
+  header, nav, footer {
+    display: none !important;
+  }
+
+  /* Hide anything explicitly marked print-hidden */
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Show print-only blocks */
+  .print-only {
+    display: block !important;
+  }
+
+  /* Ensure cards/sections print full width */
+  .page-container,
+  .card {
+    max-width: 100% !important;
+    width: 100% !important;
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+  }
+
+  /* Give printable page breathing room */
+  @page {
+    margin: 14mm;
+  }
+}
+
+/* Default: print-only hidden on screen */
+.print-only {
+  display: none;
 }
