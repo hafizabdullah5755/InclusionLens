@@ -1,8 +1,3 @@
-/* =========================
-   InclusionLens – index.css (Day 14)
-   Global Reset + A11y + Print Support
-   ========================= */
-
 /* Global Reset */
 * {
   box-sizing: border-box;
@@ -10,114 +5,42 @@
   padding: 0;
 }
 
-/* Smooth transitions / scroll */
+/* ---------- Theme tokens (Light default) ---------- */
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-soft: rgba(0,0,0,0.06);
+  --text: #0f172a;
+  --muted: #475569;
+  --border: rgba(15, 23, 42, 0.12);
+
+  --accent: #0f766e;
+  --accent-contrast: #ffffff;
+}
+
+/* Smooth transitions */
 html, body {
   scroll-behavior: smooth;
-  height: 100%;
 }
 
-/* Base typography */
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  color: #1f2937;              /* slate-800 */
-  background: #f8fafc;         /* slate-50 */
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-/* If your dark mode toggle adds a `.dark` class to body or html */
-body.dark,
-html.dark body {
-  color: #f1f5f9;              /* slate-100 */
-  background: #0f172a;         /* slate-950-ish */
-}
+/* ---------- Dark mode overrides ---------- */
+body.dark {
+  --bg: #0b1220;
+  --surface: #0f172a;
+  --surface-soft: rgba(255,255,255,0.06);
+  --text: #e5e7eb;
+  --muted: #cbd5e1;
+  --border: rgba(226, 232, 240, 0.12);
 
-/* Links */
-a {
-  color: inherit;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
+  --accent: #14b8a6;
+  --accent-contrast: #081a19;
 
-/* Accessible focus rings (critical for keyboard users) */
-:focus-visible {
-  outline: 3px solid #2563eb;   /* blue-600 */
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* Respect reduced-motion users */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Optional helper classes used in Day 13/14 pages */
-.page-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
-
-.card {
-  background: white;
-  border: 1px solid #e2e8f0;   /* slate-200 */
-  border-radius: 16px;
-  padding: 1rem;
-}
-
-body.dark .card,
-html.dark body .card {
-  background: #111827;         /* gray-900 */
-  border-color: #334155;        /* slate-700 */
-}
-
-/* =========================
-   PRINT SUPPORT (Day 13/14)
-   - Prints action cards cleanly
-   - Hides Nav/Footer/UI clutter
-   ========================= */
-@media print {
-  body {
-    background: white !important;
-    color: black !important;
-  }
-
-  /* Hide global chrome */
-  header, nav, footer {
-    display: none !important;
-  }
-
-  /* Hide anything explicitly marked print-hidden */
-  .print-hidden {
-    display: none !important;
-  }
-
-  /* Show print-only blocks */
-  .print-only {
-    display: block !important;
-  }
-
-  /* Ensure cards/sections print full width */
-  .page-container,
-  .card {
-    max-width: 100% !important;
-    width: 100% !important;
-    border: 1px solid #000 !important;
-    box-shadow: none !important;
-  }
-
-  /* Give printable page breathing room */
-  @page {
-    margin: 14mm;
-  }
-}
-
-/* Default: print-only hidden on screen */
-.print-only {
-  display: none;
+  background: var(--bg);
+  color: var(--text);
 }

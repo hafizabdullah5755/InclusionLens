@@ -24,8 +24,10 @@ function Navbar() {
 
   return (
     <nav className="navbar" role="navigation" aria-label="Main navigation">
-      <div className="nav-logo" tabIndex="0">
-        InclusionLens
+      {/* ✅ Logo + Tagline (Option A) */}
+      <div className="nav-logo-wrap" tabIndex="0" aria-label="InclusionLens home">
+        <span className="nav-logo">InclusionLens</span>
+        <span className="nav-tagline">Real-time inclusive teaching support</span>
       </div>
 
       <ul className="nav-links">
@@ -40,12 +42,8 @@ function Navbar() {
         <li>
           <NavLink to="/resources">Resources</NavLink>
         </li>
-
-        {/* ========================== */}
-        {/* NEW DAY-13/14 NAV LINKS    */}
-        {/* ========================== */}
         <li>
-          <NavLink to="/profile">Classroom Profile</NavLink>
+          <NavLink to="/classroom-profile">Classroom Profile</NavLink>
         </li>
         <li>
           <NavLink to="/strategy-finder">Strategy Finder</NavLink>
@@ -53,7 +51,6 @@ function Navbar() {
         <li>
           <NavLink to="/lesson-adaptor">Lesson Adaptor</NavLink>
         </li>
-
         <li>
           <NavLink to="/contact">Contact</NavLink>
         </li>
