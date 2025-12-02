@@ -1,78 +1,61 @@
 // api/adapt.js
 import OpenAI from "openai";
 
-const openai = new OpenAI({
+const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 export default async function handler(req, res) {
-  // Basic CORS (lets your GitHub Pages site call this)
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  // Handle preflight request
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
+  // Only allow POST
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST requests allowed" });
+    return res.status(405).json({ error: "Method not allowed. Use POST." });
   }
 
   try {
-    const {
-      learnerNeed = "",
-      activityContext = "",
-      noiseLevel = "",
-      timePressure = "",
-      subject = "",
-      yearGroup = "",
-    } = req.body || {};
+    const { need, context, noise, time } = req.body || {};
 
-    const prompt = `
-You are InclusionLens, a teacher-centred assistant for real-time inclusive lesson adaptation in UK classrooms.
-Give rapid, practical, evidence-aligned strategies.
-
-Context:
-- Learner need: ${learnerNeed}
-- Activity context: ${activityContext}
-- Noise level: ${noiseLevel}
-- Time pressure: ${timePressure}
-- Subject (if given): ${subject}
-- Year group (if given): ${yearGroup}
-
-Output format:
-Return 5 short strategies as a JSON array of strings.
-Each strategy must be classroom-ready, clear, and under 25 words.
-No extra text. Only valid JSON.
-`;
-
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: "You support inclusive teaching with fast, usable adaptations." },
-        { role: "user", content: prompt },
-      ],
-      temperature: 0.4,
-    });
-
-    const raw = completion.choices?.[0]?.message?.content || "[]";
-
-    // Parse safely (if model returns JSON)
-    let strategies = [];
-    try {
-      strategies = JSON.parse(raw);
-    } catch {
-      strategies = [raw];
+    if (!need || !context) {
+      return res
+        .status(400)
+        .json({ error: "Missing required fields: need, context." });
     }
 
-    return res.status(200).json({ strategies });
-  } catch (err) {
-    console.error(err);
+    const prompt = `You are an inclusion specialist helping a teacher plan quick, practical classroom adaptations.
+
+Return 4–6 bullet-point strategies only. No intro, no closing sentence.
+
+Each bullet should:
+- Be specific and classroom-ready
+- Be suitable for mainstream UK classrooms
+- Focus on inclusive practice
+
+Learner profile:
+- Need: ${need}
+- Activity context: ${context}
+- Noise level: ${noise || "not given"}
+- Time pressure: ${time || "not given"}
+`;
+
+    const completion = await client.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: "You generate concise inclusive strategies." },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0.6,
+      max_tokens: 400,
+    });
+
+    const text = completion.choices?.[0]?.message?.content || "";
+
+    return res.status(200).json({
+      suggestions: text,
+    });
+  } catch (error) {
+    console.error("Adapt API error:", error);
     return res.status(500).json({
-      error: "AI request failed",
-      details: err?.message || String(err),
+      error: "Server error while generating strategies.",
+      details: error.message,
     });
   }
 }
