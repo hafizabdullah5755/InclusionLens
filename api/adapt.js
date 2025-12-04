@@ -1,88 +1,148 @@
 // api/adapt.js
-// Serverless function for lesson adaptation suggestions
+import OpenAI from "openai";
 
-const OpenAI = require("openai");
-
-// Configure OpenAI client using your Vercel env var
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// (Optional but useful) — tell Vercel which runtime to use
-module.exports.config = {
-  runtime: "nodejs20.x",
-};
+// Basic scrubber to remove obvious identifiers (very conservative)
+function scrubText(input) {
+  if (!input) return "";
 
-module.exports = async (req, res) => {
-  // Allow only POST for real usage
+  let text = String(input);
+
+  // Remove email-like strings
+  text = text.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, "[redacted-email]");
+
+  // Remove long digit sequences (phone numbers)
+  text = text.replace(/\b\d{7,}\b/g, "[redacted-number]");
+
+  // Remove UK-style postcodes (rough pattern)
+  text = text.replace(
+    /\b([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})\b/gi,
+    "[redacted-postcode]"
+  );
+
+  // Remove phrases like "years old"
+  text = text.replace(/\b\d{1,2}\s+years?\s+old\b/gi, "[redacted-age]");
+
+  return text;
+}
+
+export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "OPTIONS, POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed. Use POST.",
-    });
+    return res
+      .status(405)
+      .json({ ok: false, error: "Method not allowed. Use POST." });
   }
 
   try {
-    const { need, context, noise, time } = req.body || {};
+    const body = req.body || {};
+    const {
+      need,
+      context,
+      noise,
+      time,
+      learnerAlias,
+      learnerNeeds,
+      learnerSupports,
+      learnerNotes,
+      extraNotes,
+    } = body;
 
     if (!need || !context) {
       return res.status(400).json({
-        error: "Missing required fields: 'need' and 'context' are required.",
+        ok: false,
+        error: "Missing required fields: need and context.",
       });
     }
 
+    // Build anonymised description
+    const safeAlias = learnerAlias ? scrubText(learnerAlias) : null;
+    const safeNeeds = Array.isArray(learnerNeeds) ? learnerNeeds.join(", ") : need;
+    const safeSupports = Array.isArray(learnerSupports)
+      ? learnerSupports.join("; ")
+      : "";
+    const safeNotes = scrubText(learnerNotes || "");
+    const safeExtra = scrubText(extraNotes || "");
+
+    const learnerLine = safeAlias
+      ? `Learner alias: ${safeAlias} (this is an anonymised label, not a real name).`
+      : "No individual learner alias provided (class-level scenario).";
+
     const prompt = `
-You are supporting a teacher in a mainstream classroom with mixed needs.
+You are an inclusive education assistant supporting teachers in UK classrooms.
 
-Learner need: ${need}
-Activity context: ${context}
-Noise level: ${noise || "not specified"}
-Time pressure: ${time || "not specified"}
+TASK:
+Generate clear, practical, evidence-aligned classroom strategies that support inclusive practice.
+Always present strategies in short, actionable bullet points suitable for a busy teacher.
 
-Give 5–7 very practical, classroom-ready adaptation strategies.
-Each strategy should be:
-- 1–2 sentences
-- Concrete and specific (no generic advice)
-- Focused on inclusive practice and reducing barriers
+Important ETHICS & PRIVACY constraints:
+- You are working with anonymised data only.
+- Do NOT ask for or assume any real names, addresses, dates of birth, or identifying details.
+- Treat any alias (e.g. "Learner A") as an anonymous label only.
+- Your job is ONLY to suggest teaching strategies, not to diagnose.
 
-Return them as a numbered list.
-    `.trim();
+SCENARIO (anonymised):
+- ${learnerLine}
+- Main need(s): ${safeNeeds}
+- Teaching context: ${context}
+- Noise level: ${noise}
+- Time pressure: ${time}
 
-    // Call OpenAI Responses API
+Additional classroom notes (already anonymised for you):
+- Existing strategies that help: ${safeSupports || "None recorded yet."}
+- Learner classroom notes: ${safeNotes || "None."}
+- Extra teacher notes: ${safeExtra || "None."}
+
+OUTPUT FORMAT:
+Return 6–10 bullet points.
+Each bullet:
+- Starts with an imperative verb (e.g. "Provide", "Offer", "Reduce").
+- Is specific enough to action in class within 5 minutes.
+- Avoids jargon as much as possible.
+- Focuses on adaptations the classroom teacher can make without extra resources.
+`;
+
     const response = await client.responses.create({
       model: "gpt-4o-mini",
       input: prompt,
     });
 
-    const text =
-      response.output &&
-      response.output[0] &&
-      response.output[0].content &&
-      response.output[0].content[0].text
-        ? response.output[0].content[0].text
-        : "";
+    const rawText =
+      response.output?.[0]?.content?.[0]?.text || "No response text generated.";
 
-    // Split into individual strategies
-    const suggestions = text
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line && /\d\./.test(line)); // keep numbered lines
+    const suggestions = rawText
+      .split(/\n+/)
+      .map((line) => line.replace(/^[-*•]\s*/, "").trim())
+      .filter((line) => line.length > 0);
 
     return res.status(200).json({
       ok: true,
-      need,
-      context,
-      noise,
-      time,
       suggestions,
+      rawText,
     });
-  } catch (error) {
-    console.error("ADAPT_FUNCTION_ERROR", error);
+  } catch (err) {
+    console.error("Internal server error in /api/adapt", err);
+    const status = err?.status || 500;
+    const message =
+      status === 429
+        ? "The AI service has reached its usage limit. Please try again later or adjust your API quota."
+        : "Internal server error in /api/adapt";
 
-    // Make sure you still return JSON on error
-    return res.status(500).json({
+    return res.status(status).json({
       ok: false,
-      error: "Internal server error in /api/adapt",
-      message: error.message,
+      error: message,
+      message,
     });
   }
-};
+}
