@@ -1,333 +1,305 @@
-// src/pages/StrategyFinder.js
-import React, { useEffect, useState } from "react";
-import {
-  loadProfile,
-  ensureDemoProfile,
-} from "../utils/profileStorage";
+// src/pages/StrategyFinder.jsx
+import React, { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { STRATEGIES } from "../data/strategies";
 import "./StrategyFinder.css";
-
-const API_URL = "https://inclusionlens-clean.vercel.app/api/adapt";
-
-const DEFAULT_CONTEXTS = [
-  "Whole class",
-  "Independent work",
-  "Group work",
-  "Practical task",
-];
-
-const DEFAULT_NOISE = ["Low", "Medium", "High"];
-const DEFAULT_TIME = ["Low", "Normal", "High"];
+import { askAdaptation } from "../api/adaptClient";
 
 export default function StrategyFinder() {
-  const [profile, setProfile] = useState({ classes: [] });
-  const [selectedClassId, setSelectedClassId] = useState("");
-  const [selectedLearnerId, setSelectedLearnerId] = useState("");
-
+  // Filters for the static strategy library
   const [need, setNeed] = useState("ADHD");
   const [context, setContext] = useState("Whole class");
   const [noise, setNoise] = useState("Medium");
   const [time, setTime] = useState("Normal");
+  const [search, setSearch] = useState("");
+  const [tagFilter, setTagFilter] = useState("All");
 
-  const [extraNotes, setExtraNotes] = useState("");
+  // AI integration state
+  const [aiStatus, setAiStatus] = useState("idle"); // idle | loading | success | error
+  const [aiError, setAiError] = useState("");
+  const [aiStrategies, setAiStrategies] = useState([]);
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [rawText, setRawText] = useState("");
+  // Filter static strategies from strategies.js
+  const filteredStaticStrategies = useMemo(() => {
+    return STRATEGIES.filter((s) => {
+      // Basic matching rules (adjust if your schema is different)
+      const matchesNeed =
+        !need || need === "Any" || s.needs?.includes?.(need) || false;
 
-  // Load anonymised classroom profile
-  useEffect(() => {
-    const loaded = ensureDemoProfile(loadProfile());
-    setProfile(loaded);
-    if (loaded.classes.length > 0) {
-      setSelectedClassId(loaded.classes[0].id);
-    }
-  }, []);
+      const matchesContext =
+        !context ||
+        context === "Any" ||
+        s.contexts?.includes?.(context) ||
+        false;
 
-  const selectedClass =
-    profile.classes.find((c) => c.id === selectedClassId) || null;
+      const matchesTag =
+        tagFilter === "All" ||
+        s.tags?.some?.((t) => t.toLowerCase() === tagFilter.toLowerCase()) ||
+        false;
 
-  const learners = selectedClass?.learners || [];
-  const selectedLearner =
-    learners.find((l) => l.id === selectedLearnerId) || null;
+      const matchesSearch =
+        !search ||
+        s.title?.toLowerCase().includes(search.toLowerCase()) ||
+        s.summary?.toLowerCase().includes(search.toLowerCase()) ||
+        false;
 
-  // When learner changes, auto-fill need and notes (but remain anonymised)
-  useEffect(() => {
-    if (!selectedLearner) return;
-    if (selectedLearner.needs?.length) {
-      setNeed(selectedLearner.needs[0]); // use first tagged need as primary
-    }
-    // Pre-fill extraNotes with SAFE, classroom-only info
-    const safeLines = [];
-    if (selectedLearner.needs?.length) {
-      safeLines.push(
-        `Needs: ${selectedLearner.needs.join(", ")} (anonymised tags).`
-      );
-    }
-    if (selectedLearner.keySupports?.length) {
-      safeLines.push(
-        `Strategies that have helped previously: ${selectedLearner.keySupports.join(
-          "; "
-        )}.`
-      );
-    }
-    if (selectedLearner.notes) {
-      safeLines.push(
-        `Classroom notes (non-identifiable): ${selectedLearner.notes}`
-      );
-    }
-    setExtraNotes(safeLines.join("\n"));
-  }, [selectedLearner]);
+      return matchesNeed && matchesContext && matchesTag && matchesSearch;
+    });
+  }, [need, context, tagFilter, search]);
 
-  async function handleSubmit(e) {
+  async function handleAskAI(e) {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    setSuggestions([]);
-    setRawText("");
+    setAiStatus("loading");
+    setAiError("");
+    setAiStrategies([]);
 
     try {
-      const payload = {
+      const suggestions = await askAdaptation({
         need,
         context,
         noise,
         time,
-        // anonymised learner info – NO real names
-        learnerAlias: selectedLearner ? selectedLearner.alias : null,
-        learnerNeeds: selectedLearner?.needs || [],
-        learnerSupports: selectedLearner?.keySupports || [],
-        learnerNotes: selectedLearner?.notes || "",
-        extraNotes,
-      };
-
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-
-      if (!res.ok || !data.ok) {
-        const msg =
-          data?.message ||
-          data?.error ||
-          "The AI service could not generate strategies right now.";
-        setError(msg);
-        return;
-      }
-
-      setSuggestions(data.suggestions || []);
-      setRawText(data.rawText || "");
+      setAiStrategies(suggestions);
+      setAiStatus("success");
     } catch (err) {
-      console.error(err);
-      setError(
-        "Network error while contacting the AI service. This may be due to API limits. Please try again later."
+      setAiError(
+        err?.message ||
+          "Network error while contacting the AI service. Please check your connection and try again."
       );
-    } finally {
-      setLoading(false);
+      setAiStatus("error");
     }
   }
 
   return (
     <div className="sf-page">
-      <section className="sf-header">
-        <h1>Strategy Finder (anonymised)</h1>
-        <p>
-          Generate classroom-ready, evidence-informed strategies using{" "}
-          <strong>only anonymised learner profiles</strong>. No real names or
-          personal data are processed by the AI.
-        </p>
-        <p className="sf-ethics-note">
-          ⚠️ <strong>Ethics note:</strong> Learners are referenced only as{" "}
-          <em>Learner A</em>, <em>Student 1</em>, etc. The mapping to real
-          pupils (if any) must stay inside the school or teacher&apos;s own
-          notes, not in this tool.
-        </p>
-      </section>
+      {/* HEADER */}
+      <header className="sf-header">
+        <div>
+          <h1>Strategy Finder</h1>
+          <p className="sf-subtitle">
+            Browse a library of classroom strategies and optionally ask the AI
+            for extra ideas &ndash; using anonymised learner needs only.
+          </p>
+        </div>
+        <Link className="sf-link" to="/classroom-profile">
+          ← Back to Classroom Profile
+        </Link>
+      </header>
 
-      <section
-        className="sf-layout"
-        aria-label="Strategy Finder with class and learner selection"
-      >
-        <form className="sf-form" onSubmit={handleSubmit}>
-          {/* Class & Learner selection */}
-          <fieldset className="sf-fieldset">
-            <legend>Step 1 – Select class & anonymised learner (optional)</legend>
+      {/* LAYOUT: filters + results */}
+      <div className="sf-layout">
+        {/* LEFT: filters + AI trigger */}
+        <section
+          className="sf-panel sf-filters"
+          aria-label="Filter strategies and ask AI"
+        >
+          <h2>Filter by learner context</h2>
 
-            <div className="sf-grid">
-              <label>
-                Class
-                <select
-                  value={selectedClassId || ""}
-                  onChange={(e) => {
-                    setSelectedClassId(e.target.value);
-                    setSelectedLearnerId("");
-                  }}
-                >
-                  {profile.classes.map((cls) => (
-                    <option key={cls.id} value={cls.id}>
-                      {cls.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
+          <form className="sf-form" onSubmit={handleAskAI}>
+            <label className="sf-field">
+              Learner need
+              <select
+                value={need}
+                onChange={(e) => setNeed(e.target.value)}
+                aria-label="Learner need"
+              >
+                <option>ADHD</option>
+                <option>Autism</option>
+                <option>Dyslexia</option>
+                <option>EAL</option>
+                <option>SLCN</option>
+                <option>SEMH</option>
+                <option>Any</option>
+              </select>
+            </label>
 
-              <label>
-                Learner alias (optional)
-                <select
-                  value={selectedLearnerId || ""}
-                  onChange={(e) => setSelectedLearnerId(e.target.value)}
-                >
-                  <option value="">None / whole-class focus</option>
-                  {learners.map((l) => (
-                    <option key={l.id} value={l.id}>
-                      {l.alias}
-                    </option>
-                  ))}
-                </select>
-              </label>
+            <label className="sf-field">
+              Activity context
+              <select
+                value={context}
+                onChange={(e) => setContext(e.target.value)}
+                aria-label="Activity context"
+              >
+                <option>Whole class</option>
+                <option>Independent work</option>
+                <option>Group work</option>
+                <option>Practical task</option>
+                <option>Any</option>
+              </select>
+            </label>
+
+            <label className="sf-field">
+              Noise level
+              <select
+                value={noise}
+                onChange={(e) => setNoise(e.target.value)}
+                aria-label="Noise level"
+              >
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </label>
+
+            <label className="sf-field">
+              Time pressure
+              <select
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                aria-label="Time pressure"
+              >
+                <option>Low</option>
+                <option>Normal</option>
+                <option>High</option>
+              </select>
+            </label>
+
+            <hr className="sf-separator" />
+
+            <label className="sf-field">
+              Search strategies
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by keyword…"
+              />
+            </label>
+
+            <label className="sf-field">
+              Tag filter
+              <select
+                value={tagFilter}
+                onChange={(e) => setTagFilter(e.target.value)}
+              >
+                <option value="All">All</option>
+                <option value="environment">Environment</option>
+                <option value="communication">Communication</option>
+                <option value="routines">Routines</option>
+                <option value="sensory">Sensory</option>
+                <option value="assessment">Assessment</option>
+              </select>
+            </label>
+
+            <div className="sf-ai-hint">
+              <strong>AI demo mode:</strong> When you click{" "}
+              <em>Ask AI for extra ideas</em>, only anonymised data (need,
+              context, noise, time) is sent to the AI service. No pupil names or
+              identifiers are ever sent.
             </div>
 
-            {selectedLearner && (
-              <p className="sf-learner-summary">
-                Generating strategies for{" "}
-                <strong>{selectedLearner.alias}</strong> using anonymised tags
-                only.
+            <button
+              type="submit"
+              className="sf-ai-button"
+              disabled={aiStatus === "loading"}
+            >
+              {aiStatus === "loading" ? "Asking AI…" : "Ask AI for extra ideas"}
+            </button>
+          </form>
+        </section>
+
+        {/* RIGHT: results (static + AI) */}
+        <section
+          className="sf-panel sf-results"
+          aria-label="Strategy results"
+        >
+          {/* STATIC STRATEGIES */}
+          <div className="sf-section">
+            <h2>Library strategies</h2>
+            <p className="sf-section-note">
+              These strategies come from your static InclusionLens library and
+              are always available, even without AI credits.
+            </p>
+
+            {filteredStaticStrategies.length === 0 ? (
+              <p className="sf-empty">
+                No strategies match these filters yet. Try changing the need,
+                context, or removing the search term.
+              </p>
+            ) : (
+              <ul className="sf-strategy-list">
+                {filteredStaticStrategies.map((s) => (
+                  <li key={s.id} className="sf-strategy-card">
+                    <h3>{s.title}</h3>
+                    {s.summary && <p>{s.summary}</p>}
+                    {Array.isArray(s.tags) && s.tags.length > 0 && (
+                      <p className="sf-tags">
+                        {s.tags.map((t) => (
+                          <span key={t} className="sf-tag">
+                            {t}
+                          </span>
+                        ))}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* AI STRATEGIES */}
+          <div className="sf-section">
+            <h2>AI-suggested strategies (demo)</h2>
+            <p className="sf-section-note">
+              These ideas are generated on demand using anonymised learner
+              profiles. For real schools, treat them as professional prompts,
+              not automatic instructions.
+            </p>
+
+            {aiStatus === "idle" && (
+              <p className="sf-empty">
+                Click <strong>Ask AI for extra ideas</strong> to see suggestions
+                based on the current learner need and context.
               </p>
             )}
-          </fieldset>
 
-          {/* Core scenario controls */}
-          <fieldset className="sf-fieldset">
-            <legend>Step 2 – Describe the teaching situation</legend>
+            {aiStatus === "loading" && (
+              <p className="sf-empty">Asking the AI for suggestions…</p>
+            )}
 
-            <div className="sf-grid">
-              <label>
-                Primary need (anonymised)
-                <select
-                  value={need}
-                  onChange={(e) => setNeed(e.target.value)}
-                >
-                  <option>ADHD</option>
-                  <option>Autism</option>
-                  <option>Dyslexia</option>
-                  <option>EAL</option>
-                  <option>SLCN</option>
-                  <option>SEMH</option>
-                  <option>Visual impairment</option>
-                  <option>Hearing impairment</option>
-                </select>
-              </label>
+            {aiStatus === "error" && (
+              <div className="sf-error" role="alert">
+                {aiError ||
+                  "Network error while contacting the AI service. Please check your connection and try again."}
+              </div>
+            )}
 
-              <label>
-                Activity context
-                <select
-                  value={context}
-                  onChange={(e) => setContext(e.target.value)}
-                >
-                  {DEFAULT_CONTEXTS.map((ctx) => (
-                    <option key={ctx}>{ctx}</option>
-                  ))}
-                </select>
-              </label>
+            {aiStatus === "success" && aiStrategies.length === 0 && (
+              <p className="sf-empty">
+                The AI did not return any strategies for this combination. Try a
+                different learner need or context.
+              </p>
+            )}
 
-              <label>
-                Noise level
-                <select
-                  value={noise}
-                  onChange={(e) => setNoise(e.target.value)}
-                >
-                  {DEFAULT_NOISE.map((n) => (
-                    <option key={n}>{n}</option>
-                  ))}
-                </select>
-              </label>
-
-              <label>
-                Time pressure
-                <select
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                >
-                  {DEFAULT_TIME.map((t) => (
-                    <option key={t}>{t}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </fieldset>
-
-          {/* Extra anonymised notes */}
-          <fieldset className="sf-fieldset">
-            <legend>Step 3 – Optional anonymised context</legend>
-            <p className="sf-help">
-              Add brief, classroom-focused details only.{" "}
-              <strong>Do not include names, addresses, dates of birth, or any
-              identifying information.</strong>
-            </p>
-            <textarea
-              value={extraNotes}
-              onChange={(e) => setExtraNotes(e.target.value)}
-              rows={4}
-              placeholder={
-                "E.g. Learner finds transitions difficult and benefits from advance warning.\nAvoids reading aloud but responds well to paired reading."
-              }
-            />
-          </fieldset>
-
-          <button
-            type="submit"
-            className="sf-submit"
-            disabled={loading}
-            aria-busy={loading}
-          >
-            {loading ? "Generating strategies…" : "Generate strategies"}
-          </button>
-
-          {error && (
-            <div className="sf-error" role="alert">
-              {error}
-            </div>
-          )}
-        </form>
-
-        {/* Results */}
-        <section className="sf-results" aria-label="Strategy suggestions">
-          <h2>Suggested strategies</h2>
-
-          {!loading && !error && suggestions.length === 0 && !rawText && (
-            <p className="sf-placeholder">
-              Strategies will appear here once you run a search. When AI
-              credits are unavailable, you can still use this area to paste or
-              record strategies manually during observations.
-            </p>
-          )}
-
-          {suggestions.length > 0 && (
-            <ol className="sf-list">
-              {suggestions.map((s, idx) => (
-                <li key={idx}>{s}</li>
-              ))}
-            </ol>
-          )}
-
-          {rawText && (
-            <details className="sf-raw">
-              <summary>View full AI response (for research notes)</summary>
-              <pre>{rawText}</pre>
-            </details>
-          )}
-
-          <p className="sf-footnote">
-            Note: This tool is a <strong>prototype</strong>. Strategies should
-            always be checked against school policy, professional judgement, and
-            the individual learner&apos;s context.
-          </p>
+            {aiStatus === "success" && aiStrategies.length > 0 && (
+              <ul className="sf-strategy-list">
+                {aiStrategies.map((s, index) => (
+                  <li key={index} className="sf-strategy-card sf-ai-card">
+                    <h3>{s.title || "Suggested strategy"}</h3>
+                    {s.description && <p>{s.description}</p>}
+                    {s.timeframe && (
+                      <p className="sf-timeframe">
+                        Suggested timeframe: <strong>{s.timeframe}</strong>
+                      </p>
+                    )}
+                    {Array.isArray(s.tags) && s.tags.length > 0 && (
+                      <p className="sf-tags">
+                        {s.tags.map((t) => (
+                          <span key={t} className="sf-tag sf-tag-ai">
+                            {t}
+                          </span>
+                        ))}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </section>
-      </section>
+      </div>
     </div>
   );
 }
